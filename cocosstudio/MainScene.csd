@@ -6,15 +6,15 @@
       <ObjectData Name="Scene" ctype="GameNodeObjectData">
         <Size X="960.0000" Y="640.0000" />
         <Children>
-          <AbstractNodeData Name="bg_4" ActionTag="285927178" Tag="6" IconVisible="False" LeftMargin="-34.3272" RightMargin="-29.6727" TopMargin="-64.6956" BottomMargin="-63.3045" ctype="SpriteObjectData">
-            <Size X="1024.0000" Y="768.0000" />
+          <AbstractNodeData Name="bigpot_2" ActionTag="-334148737" Tag="4" IconVisible="False" LeftMargin="-34.1552" RightMargin="-29.8448" TopMargin="-55.6777" BottomMargin="-56.3223" ctype="SpriteObjectData">
+            <Size X="1024.0000" Y="752.0000" />
             <AnchorPoint ScaleX="0.5000" ScaleY="0.5000" />
-            <Position X="477.6728" Y="320.6955" />
-            <Scale ScaleX="0.9469" ScaleY="0.8338" />
+            <Position X="477.8448" Y="319.6777" />
+            <Scale ScaleX="0.9397" ScaleY="0.8486" />
             <CColor A="255" R="255" G="255" B="255" />
-            <PrePosition X="0.4976" Y="0.5011" />
-            <PreSize X="1.0667" Y="1.2000" />
-            <FileData Type="Normal" Path="bg.jpg" Plist="" />
+            <PrePosition X="0.4978" Y="0.4995" />
+            <PreSize X="1.0667" Y="1.1750" />
+            <FileData Type="Normal" Path="bigpot.jpg" Plist="" />
             <BlendFunc Src="770" Dst="771" />
           </AbstractNodeData>
         </Children>

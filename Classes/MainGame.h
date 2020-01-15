@@ -2,6 +2,9 @@
 #define __HELLOWORLD_SCENE_H__
 
 #include "cocos2d.h"
+#include "Food.h"
+
+using namespace cocos2d;
 
 class MainGame : public cocos2d::Layer
 {
@@ -19,13 +22,16 @@ public:
 	bool onTouchBegan(cocos2d::Touch* touch, cocos2d::Event* event);
 	void onTouchEnded(cocos2d::Touch* touch, cocos2d::Event* event);
 private:
-	cocos2d::Rect upRect;
-	cocos2d::Rect downRect;
+	Rect upRect;
+	Rect downRect;
+	//Sprite* down;
 	bool stretching;
 	bool recovering;
-	cocos2d::Vec2 lastPos;
-	cocos2d::Vec2 desPos;
-	cocos2d::Vector<cocos2d::Sprite*> spritePools;
+	bool get;
+	Vec2 lastPos;
+	Vec2 desPos;
+	Vector<Food*> foodPools;
+	int count;
 };
 
 #endif // __HELLOWORLD_SCENE_H__

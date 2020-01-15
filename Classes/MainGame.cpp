@@ -98,7 +98,6 @@ bool MainGame::init()
 	scheduleUpdate();
 
 	auto rootNode = CSLoader::createNode("MainScene.csb");
-
 	addChild(rootNode);
 
 	auto chopSticks = Sprite::create("kuaizi.png");
@@ -110,8 +109,12 @@ bool MainGame::init()
 	auto frameSize = glView->getFrameSize();
 
 	upRect = CCRectMake(100.0f, frameSize.height - 200.0f, frameSize.width - 200.0f, 100.0f);
-	downRect = CCRectMake(100.0f, 100.0f, frameSize.width - 200.0f, 300.0f);
-	stretching = recovering = false;
+	downRect = CCRectMake(164, 132, frameSize.width - 328.0f, 300.0f);
+	stretching = recovering = get = false;
+
+	//down = Sprite::create("blank.jpg");
+	//addChild(down);
+	//down->setPosition(ccp(frameSize.width / 2, 250));
 
 	CCDrawNode *draw1 = CCDrawNode::create();
 	addChild(draw1, 1000);
@@ -130,6 +133,43 @@ bool MainGame::init()
 		ccp(frameSize.width - 100.0f, 400.0f),
 		ccp(frameSize.width - 100.0f, 100.0f) };
 	draw2->drawPolygon(rect2, 4, ccc4f(0, 0, 0, 0), 1, red);
+
+	int ran = 0;
+	count = 10;
+
+	for (size_t i = 0; i < count; i++)
+	{
+		ran = rand() % 5;
+		Food::FoodType type;
+		switch (ran)
+		{
+		case 0:
+			type = Food::FoodType::CHILI;
+			break;
+		case 1:
+			type = Food::FoodType::CRAB;
+			break;
+		case 2:
+			type = Food::FoodType::FISHCHIP;
+			break;
+		case 3:
+			type = Food::FoodType::PRAWN;
+			break;
+		case 4:
+			type = Food::FoodType::VEGE001;
+			break;
+		default:
+			break;
+		}
+		float speed = (rand() % 5 + 3) / 2.0f;
+		Vec2 dir = ccp(rand() % 2 ? 1 : -1, 0.0f);
+		Vec2 position = ccp(rand() % 632 + 164, rand() % 172 + 164);
+		Food* food = Food::create(type, dir, speed);
+		food->setPosition(position);
+		addChild(food);
+		foodPools.pushBack(food);
+		food->runAction(MoveTo::create(speed, position + dir * 1000));;
+	}
 
 	return true;
 }
@@ -151,6 +191,35 @@ void MainGame::update(float dt)
 		CCLOG("Ö´ÐÐ:%d", 4);
 		s->stopAllActions();
 		recovering = false;
+		get = false;
+		s->removeAllChildren();
+	}
+
+	for (size_t i = 0; i < count; i++)
+	{
+		if (foodPools.at(i)->getBoundingBox().intersectsRect(s->getBoundingBox()) && !get)
+		{
+			get = true;
+			count--;
+			removeChild(foodPools.at(i));
+			s->addChild(foodPools.at(i));
+			stretching = false;
+			recovering = true;
+			s->stopAllActions();
+			foodPools.at(i)->stopAllActions();
+			s->runAction(MoveTo::create(1.5, lastPos));
+			foodPools.at(i)->setPosition(ccp(16, -32));
+			foodPools.erase(i);
+			break;
+		}
+	}
+	for (size_t i = 0; i < count; i++)
+	{
+		bool flag = downRect.containsPoint(foodPools.at(i)->getPosition());
+		if (!flag)
+		{
+			foodPools.at(i)->SwitchDir();
+		}
 	}
 }
 
@@ -165,8 +234,6 @@ void MainGame::onTouchEnded(cocos2d::Touch * touch, cocos2d::Event * event)
 	if (!stretching && !recovering)
 	{
 		auto s = getChildByTag(kTagChopSticks);
-		Vec2 sp;
-		s->convertToWorldSpace(sp);
 		if (upRect.containsPoint(location))
 		{
 			CCLOG("Ö´ÐÐ:%d", 1);
@@ -181,7 +248,7 @@ void MainGame::onTouchEnded(cocos2d::Touch * touch, cocos2d::Event * event)
 			s->stopAllActions();
 			lastPos = s->getPosition();
 			desPos = location;
-			s->runAction(MoveTo::create(1, Vec2(location.x, location.y)));
+			s->runAction(MoveTo::create((location - s->getPosition()).length() / 400.0f, Vec2(location.x, location.y)));
 		}
 	}
 }

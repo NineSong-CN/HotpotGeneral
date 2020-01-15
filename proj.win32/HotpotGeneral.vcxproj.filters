@@ -30,7 +30,7 @@
     <ClCompile Include="..\Classes\MainGame.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="Food.cpp">
+    <ClCompile Include="..\Classes\Food.cpp">
       <Filter>食材</Filter>
     </ClCompile>
   </ItemGroup>
@@ -44,7 +44,7 @@
     <ClInclude Include="..\Classes\MainGame.h">
       <Filter>src</Filter>
     </ClInclude>
-    <ClInclude Include="Food.h">
+    <ClInclude Include="..\Classes\Food.h">
       <Filter>食材</Filter>
     </ClInclude>
   </ItemGroup>
